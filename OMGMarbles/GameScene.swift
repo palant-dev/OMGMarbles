@@ -7,7 +7,12 @@
 
 import SpriteKit
 
+//We can declare a class to use a shorter name for the Node containing each ball (sprite)
+class Ball: SKSpriteNode { }
+
 class GameScene: SKScene {
+
+    var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
 
     override func didMove(to view: SKView) {
     }
