@@ -27,6 +27,13 @@ class GameScene: SKScene {
         background.zPosition = -1
         addChild(background)
 
+        scoreLabel.fontSize = 72
+        scoreLabel.position = CGPoint(x: 20, y: 20)
+        scoreLabel.text = "SCORE: 0"
+        scoreLabel.zPosition = 100
+        scoreLabel.horizontalAlignmentMode = .left
+        addChild(scoreLabel)
+
         // Here we are creating the ball element with its radius
         let ball = SKSpriteNode(imageNamed: "ballBlue")
         let ballRadius = ball.frame.width / 2.0
