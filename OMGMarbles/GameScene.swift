@@ -15,6 +15,11 @@ class GameScene: SKScene {
     var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
 
     override func didMove(to view: SKView) {
+        let background = SKSpriteNode(imageNamed: "checkerboard")
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.alpha = 0.2
+        background.zPosition = -1
+        addChild(background)
     }
 
     override func update(_ currentTime: TimeInterval) {
