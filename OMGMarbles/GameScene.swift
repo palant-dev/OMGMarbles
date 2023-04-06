@@ -19,6 +19,7 @@ class GameScene: SKScene {
     var motionManager: CMMotionManager?
 
     let scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Thin")
+    var matchedBalls  = Set<Ball>()
 
     var score = 0 {
         didSet {
@@ -84,4 +85,41 @@ class GameScene: SKScene {
             physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
         }
     }
+
+    func getMatches(from node: Ball) {
+        for body in node.physicsBody!.allContactedBodies() {
+            // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
+            guard let ball = body.node as? Ball else { continue }
+            // This is for checking if the ball touched has the same name (colour)
+            guard ball.name == node.name else { continue }
+
+            if !matchedBalls.contains(ball) {
+                matchedBalls.insert(ball)
+                getMatches(from: ball)
+            }
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        // If for any reason we cannot understand where the tap happens, ignore it
+        guard let position = touches.first?.location(in: self) else { return }
+
+        // We need to be sure if the thing tapped is the ball
+        guard let tappedBall = nodes(at: position).first(where: { $0 is Ball }) as? Ball else { return }
+
+        // This is for not adding any more ball when removing
+        matchedBalls.removeAll(keepingCapacity: true)
+
+        getMatches(from: tappedBall)
+
+        // This is for not letting the user tap and remove even isolated balls
+        if matchedBalls.count >= 3 {
+            for ball in matchedBalls {
+                ball.removeFromParent()
+            }
+        }
+    }
+
 }
