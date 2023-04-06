@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		9E1539AE29DF01B4002A5794 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1539AD29DF01B4002A5794 /* AppDelegate.swift */; };
 		9E1539B029DF01B4002A5794 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E1539AF29DF01B4002A5794 /* GameScene.sks */; };
-		9E1539B229DF01B4002A5794 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9E1539B129DF01B4002A5794 /* Actions.sks */; };
 		9E1539B429DF01B4002A5794 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1539B329DF01B4002A5794 /* GameScene.swift */; };
 		9E1539B629DF01B4002A5794 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1539B529DF01B4002A5794 /* GameViewController.swift */; };
 		9E1539B929DF01B4002A5794 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E1539B729DF01B4002A5794 /* Main.storyboard */; };
@@ -21,7 +20,6 @@
 		9E1539AA29DF01B4002A5794 /* OMGMarbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMGMarbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E1539AD29DF01B4002A5794 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E1539AF29DF01B4002A5794 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		9E1539B129DF01B4002A5794 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		9E1539B329DF01B4002A5794 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		9E1539B529DF01B4002A5794 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		9E1539B829DF01B4002A5794 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -61,7 +59,6 @@
 			children = (
 				9E1539AD29DF01B4002A5794 /* AppDelegate.swift */,
 				9E1539AF29DF01B4002A5794 /* GameScene.sks */,
-				9E1539B129DF01B4002A5794 /* Actions.sks */,
 				9E1539B329DF01B4002A5794 /* GameScene.swift */,
 				9E1539B529DF01B4002A5794 /* GameViewController.swift */,
 				9E1539B729DF01B4002A5794 /* Main.storyboard */,
@@ -81,6 +78,7 @@
 				9E1539A629DF01B4002A5794 /* Sources */,
 				9E1539A729DF01B4002A5794 /* Frameworks */,
 				9E1539A829DF01B4002A5794 /* Resources */,
+				9E7A860229DF0EC8009FCA4D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -133,11 +131,30 @@
 				9E1539B029DF01B4002A5794 /* GameScene.sks in Resources */,
 				9E1539BB29DF01B6002A5794 /* Assets.xcassets in Resources */,
 				9E1539BE29DF01B6002A5794 /* LaunchScreen.storyboard in Resources */,
-				9E1539B229DF01B4002A5794 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9E7A860229DF0EC8009FCA4D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nexport PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9E1539A629DF01B4002A5794 /* Sources */ = {
@@ -298,9 +315,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,9 +343,9 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
