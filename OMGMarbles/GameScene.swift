@@ -48,6 +48,9 @@ class GameScene: SKScene {
             }
         }
 
+        /// This will add a constrint to the ball in order to not fall off the view
+        ///     - top: regulates the ammount of space used by the HUD
+        physicsBody = SKPhysicsBody(edgeLoopFrom: frame.inset(by: UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)))
 
     }
 
