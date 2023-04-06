@@ -14,8 +14,11 @@ class Ball: SKSpriteNode { }
 class GameScene: SKScene {
 
     var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
+
     // If we do not put the optional to motionManager we will have to initialise it
     var motionManager: CMMotionManager?
+
+    let scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Thin")
 
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "checkerboard")
@@ -61,7 +64,7 @@ class GameScene: SKScene {
 
     override func update(_ currentTime: TimeInterval) {
         if let accelerometerData = motionManager?.accelerometerData {
-            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * -50)
+            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
         }
     }
 }
