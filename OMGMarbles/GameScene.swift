@@ -33,7 +33,7 @@ class GameScene: SKScene {
                 let ball = Ball(imageNamed: ballType)
                 ball.position = CGPoint(x: i, y: j)
                 ball.name = ballType
-                addChild(ball)
+
 
                 /// Adding physic property to the balls:
                 ///     - circleOfRadius: set the dimensions of the collision box
@@ -43,6 +43,8 @@ class GameScene: SKScene {
                 ball.physicsBody?.allowsRotation = false
                 ball.physicsBody?.restitution = 0
                 ball.physicsBody?.friction = 0
+
+                addChild(ball)
             }
         }
 
