@@ -5,6 +5,7 @@
 //  Created by Antonio Palomba on 06/04/23.
 //
 
+import CoreMotion
 import SpriteKit
 
 //We can declare a class to use a shorter name for the Node containing each ball (sprite)
@@ -13,6 +14,8 @@ class Ball: SKSpriteNode { }
 class GameScene: SKScene {
 
     var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
+    // If we do not put the optional to motionManager we will have to initialise it
+    var motionManager: CMMotionManager?
 
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "checkerboard")
@@ -52,9 +55,13 @@ class GameScene: SKScene {
         ///     - top: regulates the ammount of space used by the HUD
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame.inset(by: UIEdgeInsets(top: 100, left: 0, bottom: 0, right: 0)))
 
+        motionManager = CMMotionManager()
+        motionManager?.startAccelerometerUpdates()
     }
 
     override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+        if let accelerometerData = motionManager?.accelerometerData {
+            physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * -50)
+        }
     }
 }
