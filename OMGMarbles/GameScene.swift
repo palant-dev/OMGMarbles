@@ -20,12 +20,29 @@ class GameScene: SKScene {
 
     let scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Thin")
 
+    var score = 0 {
+        didSet {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            // We are gonna use the nihil cohalescing because otherwise we get a warning of possible nil value for scoreLabel.text
+            let formattedScore = formatter.string(from: score as NSNumber) ?? "0"
+            scoreLabel.text = "SCORE: \(formattedScore)"
+        }
+    }
+
     override func didMove(to view: SKView) {
         let background = SKSpriteNode(imageNamed: "checkerboard")
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         background.alpha = 0.2
         background.zPosition = -1
         addChild(background)
+
+        scoreLabel.fontSize = 72
+        scoreLabel.position = CGPoint(x: 20, y: 20)
+        scoreLabel.text = "SCORE: 0"
+        scoreLabel.zPosition = 100
+        scoreLabel.horizontalAlignmentMode = .left
+        addChild(scoreLabel)
 
         // Here we are creating the ball element with its radius
         let ball = SKSpriteNode(imageNamed: "ballBlue")
