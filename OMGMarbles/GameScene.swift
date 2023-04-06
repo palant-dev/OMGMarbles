@@ -100,6 +100,26 @@ class GameScene: SKScene {
         }
     }
 
-   
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+
+        // If for any reason we cannot understand where the tap happens, ignore it
+        guard let position = touches.first?.location(in: self) else { return }
+
+        // We need to be sure if the thing tapped is the ball
+        guard let tappedBall = nodes(at: position).first(where: { $0 is Ball }) as? Ball else { return }
+
+        // This is for not adding any more ball when removing
+        matchedBalls.removeAll(keepingCapacity: true)
+
+        getMatches(from: tappedBall)
+
+        // This is for not letting the user tap and remove even isolated balls
+        if matchedBalls.count >= 3 {
+            for ball in matchedBalls {
+                ball.removeFromParent()
+            }
+        }
+    }
 
 }
