@@ -19,6 +19,7 @@ class GameScene: SKScene {
     var motionManager: CMMotionManager?
 
     let scoreLabel = SKLabelNode(fontNamed: "HelveticaNeue-Thin")
+    var matchedBalls  = Set<Ball>()
 
     var score = 0 {
         didSet {
@@ -84,4 +85,21 @@ class GameScene: SKScene {
             physicsWorld.gravity = CGVector(dx: accelerometerData.acceleration.y * -50, dy: accelerometerData.acceleration.x * 50)
         }
     }
+
+    func getMatches(from node: Ball) {
+        for body in node.physicsBody!.allContactedBodies() {
+            // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
+            guard let ball = body.node as? Ball else { continue }
+            // This is for checking if the ball touched has the same name (colour)
+            guard ball.name == node.name else { continue }
+
+            if !matchedBalls.contains(ball) {
+                matchedBalls.insert(ball)
+                getMatches(from: ball)
+            }
+        }
+    }
+
+   
+
 }
