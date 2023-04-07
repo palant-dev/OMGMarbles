@@ -13,7 +13,7 @@ class Ball: SKSpriteNode { }
 
 class GameScene: SKScene {
 
-    var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
+    let balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
 
     // If we do not put the optional to motionManager we will have to initialise it
     var motionManager: CMMotionManager?
@@ -86,12 +86,37 @@ class GameScene: SKScene {
         }
     }
 
-    func getMatches(from node: Ball) {
-        for body in node.physicsBody!.allContactedBodies() {
+    ///This is the first way of adding the collision check, this is not optimal because the collision check is too strickt and can be stressfull for the user
+    //    func getMatches(from node: Ball) {
+    //        for body in node.physicsBody!.allContactedBodies() {
+    //            // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
+    //            guard let ball = body.node as? Ball else { continue }
+    //            // This is for checking if the ball touched has the same name (colour)
+    //            guard ball.name == node.name else { continue }
+    //
+    //            if !matchedBalls.contains(ball) {
+    //                matchedBalls.insert(ball)
+    //                getMatches(from: ball)
+    //            }
+    //        }
+    //    }
+
+
+    func getMatches(from startBall: Ball) {
+        // This is the value deciding the tolerance
+        let matchWidth = startBall.frame.width * startBall.frame.width * 1.1
+
+        for node in children {
+
             // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
-            guard let ball = body.node as? Ball else { continue }
+            guard let ball = node as? Ball else { continue }
+
             // This is for checking if the ball touched has the same name (colour)
-            guard ball.name == node.name else { continue }
+            guard ball.name == startBall.name else { continue }
+
+            // Condition for checking centers distances
+            let dist = distance(from: startBall, to: ball)
+            guard dist < matchWidth else { continue }
 
             if !matchedBalls.contains(ball) {
                 matchedBalls.insert(ball)
@@ -100,9 +125,15 @@ class GameScene: SKScene {
         }
     }
 
+
+    // Function that calculate distance from two balls centers with Pitagora rules, you should avoid doing the squareroot when possible to limit difficult calculus
+    func distance(from: Ball, to: Ball) -> CGFloat {
+        return (from.position.x - to.position.x) * (from.position.x - to.position.x) + (from.position.y - to.position.y) * (from.position.y - to.position.y)
+    }
+
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-
+        
         // If for any reason we cannot understand where the tap happens, ignore it
         guard let position = touches.first?.location(in: self) else { return }
 
@@ -116,10 +147,12 @@ class GameScene: SKScene {
 
         // This is for not letting the user tap and remove even isolated balls
         if matchedBalls.count >= 3 {
+            //Upping the score, but putting a max limit to the ball counter at 16 of the same colour touching together
+            score += Int(pow(2, Double(min(matchedBalls.count, 16))))
+
             for ball in matchedBalls {
                 ball.removeFromParent()
             }
         }
     }
-
 }
