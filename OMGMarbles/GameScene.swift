@@ -13,7 +13,7 @@ class Ball: SKSpriteNode { }
 
 class GameScene: SKScene {
 
-    var balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
+    let balls = ["ballBlue", "ballGreen", "ballPurple", "ballRed", "ballYellow"]
 
     // If we do not put the optional to motionManager we will have to initialise it
     var motionManager: CMMotionManager?
@@ -87,19 +87,19 @@ class GameScene: SKScene {
     }
 
     ///This is the first way of adding the collision check, this is not optimal because the collision check is too strickt and can be stressfull for the user
-//    func getMatches(from node: Ball) {
-//        for body in node.physicsBody!.allContactedBodies() {
-//            // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
-//            guard let ball = body.node as? Ball else { continue }
-//            // This is for checking if the ball touched has the same name (colour)
-//            guard ball.name == node.name else { continue }
-//
-//            if !matchedBalls.contains(ball) {
-//                matchedBalls.insert(ball)
-//                getMatches(from: ball)
-//            }
-//        }
-//    }
+    //    func getMatches(from node: Ball) {
+    //        for body in node.physicsBody!.allContactedBodies() {
+    //            // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
+    //            guard let ball = body.node as? Ball else { continue }
+    //            // This is for checking if the ball touched has the same name (colour)
+    //            guard ball.name == node.name else { continue }
+    //
+    //            if !matchedBalls.contains(ball) {
+    //                matchedBalls.insert(ball)
+    //                getMatches(from: ball)
+    //            }
+    //        }
+    //    }
 
 
     func getMatches(from startBall: Ball) {
@@ -109,7 +109,7 @@ class GameScene: SKScene {
         for node in children {
 
             // This is a check for being sure that the elements touched is a Ball (SKSpriteNode)
-            guard let ball = node as? Ball else { return }
+            guard let ball = node as? Ball else { continue }
 
             // This is for checking if the ball touched has the same name (colour)
             guard ball.name == startBall.name else { continue }
@@ -133,7 +133,7 @@ class GameScene: SKScene {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-
+        
         // If for any reason we cannot understand where the tap happens, ignore it
         guard let position = touches.first?.location(in: self) else { return }
 
@@ -155,5 +155,4 @@ class GameScene: SKScene {
             }
         }
     }
-
 }
